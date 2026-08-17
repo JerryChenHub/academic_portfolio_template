@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { profile } from '../../data/site';
+
+const research = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
+const base = import.meta.env.BASE_URL;
+const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
+---
+
+<SiteLayout
+  title="Research"
+  description={`${profile.name}'s research in robotics, planning, and multimodal reasoning.`}
+  active="research"
+>
+  <header class="page-header shell">
+    <p class="eyebrow">Research</p>
+    <h1>Problems I have been thinking about.</h1>
+    <p class="page-intro">
+      Work spanning robot task and motion planning, foundation models, and computational models of
+      human reasoning.
+    </p>
+  </header>
+
+  <section class="section shell research-index" aria-label="Research projects">
+    <div class="work-list">
+      {
+        research.map((item) => (
+          <article class="work-card index-card">
+            <a
+              class="card-hit"
+              href={withBase(`research/${item.id}/`)}
+              aria-label={`Read ${item.data.title}`}
+            />
+            <div class="work-media">
+              <img
+                src={withBase(item.data.image)}
+                alt={item.data.imageAlt}
+                width="720"
+                height="450"
+              />
+            </div>
+            <div class="work-copy">
+              <div class="work-meta">
+                <span>{item.data.year}</span>
+                <span>{item.data.venue}</span>
+              </div>
+              <h2>{item.data.title}</h2>
+              <p>{item.data.summary}</p>
+              <p class="authors">
+                {item.data.authors.map((author, index) => (
+                  <>
+                    {index > 0 && ', '}
+                    {author === profile.name ? <strong>{author}</strong> : author}
+                  </>
+                ))}
+              </p>
+              {item.data.award && <p class="award">{item.data.award}</p>}
+              <div class="link-row card-actions">
+                <a href={withBase(`research/${item.id}/`)}>Read overview<span aria-hidden="true">→</span></a>
+                {item.data.links.map((link) => (
+                  <a href={link.url} target="_blank" rel="noreferrer">
+                    {link.label}<span aria-hidden="true">↗</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</SiteLayout>

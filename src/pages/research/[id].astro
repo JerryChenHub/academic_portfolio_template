@@ -1,0 +1,68 @@
+---
+import { getCollection, render } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { profile } from '../../data/site';
+
+export async function getStaticPaths() {
+  const research = await getCollection('research');
+
+  return research.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const base = import.meta.env.BASE_URL;
+const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
+---
+
+<SiteLayout
+  title={entry.data.shortTitle}
+  description={entry.data.summary}
+  active="research"
+  image={entry.data.image}
+>
+  <article class="detail-page shell">
+    <a class="back-link" href={withBase('research/')}><span aria-hidden="true">←</span> All research</a>
+
+    <header class="detail-header">
+      <div class="work-meta">
+        <span>{entry.data.year}</span>
+        <span>{entry.data.venue}</span>
+      </div>
+      <h1>{entry.data.title}</h1>
+      <p class="detail-summary">{entry.data.summary}</p>
+      <p class="detail-authors">
+        {entry.data.authors.map((author, index) => (
+          <>
+            {index > 0 && ', '}
+            {author === profile.name ? <strong>{author}</strong> : author}
+          </>
+        ))}
+      </p>
+      {entry.data.award && <p class="award detail-award">{entry.data.award}</p>}
+      <div class="link-row detail-actions">
+        {entry.data.links.map((link) => (
+          <a href={link.url} target="_blank" rel="noreferrer">
+            {link.label}<span aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+    </header>
+
+    <figure class="detail-media">
+      <img
+        src={withBase(entry.data.image)}
+        alt={entry.data.imageAlt}
+        width="1280"
+        height="800"
+      />
+    </figure>
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</SiteLayout>
