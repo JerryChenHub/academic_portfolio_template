@@ -1,11 +1,34 @@
 export const profile = {
-  name: 'Jing Cao',
-  eyebrow: 'Robotics · AI · Systems',
-  introduction: "I'm a senior at MIT studying computer science. I do robotics.",
+  name: 'Boyang Chen',
+  introduction: "I'm a senior at UCI studying mechanical engineering and math.",
   biography: [
-    'I have interned at AWS, Tangible Robots, and Dimensional. I have also done research with the Computational Cognitive Science Group.',
-    'Currently, I am working on robot task and motion planning and foundation models with the Learning and Intelligent Systems Group.',
-    'Outside the lab, I like jazz.',
+    [
+      { text: "I've interned at " },
+      { text: 'AIRI Lab', url: 'https://airilab.com/' },
+      { text: ' and ' },
+      { text: 'Lumitron Technologies', url: 'https://www.lumitronxrays.com/' },
+      { text: ". I've also done research with " },
+      { text: "Wilson Ho's group", url: 'https://www.physics.uci.edu/~wilsonho/whoghp.htm' },
+      { text: ' and ' },
+      {
+        text: "Julian J. Rimoli's lab",
+        url: 'https://scholar.google.com/citations?user=R09eONcAAAAJ&hl=en',
+      },
+      { text: '.' },
+    ],
+    [
+      {
+        text: 'Currently, I am designing and building an automated propeller test stand at the ',
+      },
+      {
+        text: 'UCI Aircraft Systems Laboratory',
+        url: 'https://faculty.sites.uci.edu/aircraftsyslab/',
+      },
+      {
+        text: ' to conduct experiments on propeller noise in special configurations.',
+      },
+    ],
+    [{ text: 'I am a student pilot and I play piano.' }],
   ],
   portrait: 'media/jingcao.webp',
   portraitAlt: 'Jing Cao',

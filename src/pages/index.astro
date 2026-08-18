@@ -8,14 +8,28 @@ const base = import.meta.env.BASE_URL;
 const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
 ---
 
-<SiteLayout description={`${profile.name} works on robotics, planning, and foundation models.`} active="home">
+<SiteLayout
+  description={`${profile.name} studies mechanical engineering and math at UCI and builds experimental aircraft systems.`}
+  active="home"
+>
   <section class="hero shell">
     <div class="hero-copy">
-      <p class="eyebrow">{profile.eyebrow}</p>
       <h1>{profile.name}</h1>
       <p class="hero-intro">{profile.introduction}</p>
       <div class="bio-copy">
-        {profile.biography.map((paragraph) => <p>{paragraph}</p>)}
+        {
+          profile.biography.map((paragraph) => (
+            <p>
+              {paragraph.map((segment) =>
+                segment.url ? (
+                  <a href={segment.url} target="_blank" rel="noreferrer">{segment.text}</a>
+                ) : (
+                  segment.text
+                ),
+              )}
+            </p>
+          ))
+        }
       </div>
       <nav class="link-row social-links" aria-label="Profile links">
         {
@@ -43,7 +57,7 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
     </figure>
   </section>
 
-  <section class="section shell" aria-labelledby="research-heading">
+  <section class="section shell home-research" aria-labelledby="research-heading">
     <div class="section-heading">
       <div>
         <p class="eyebrow">Selected work</p>
