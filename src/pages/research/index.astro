@@ -10,15 +10,15 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
 
 <SiteLayout
   title="Research"
-  description={`${profile.name}'s research in robotics, planning, and multimodal reasoning.`}
+  description={`${profile.name}'s research in structural health monitoring, computational mechanics, and aircraft systems.`}
   active="research"
 >
   <header class="page-header shell">
     <p class="eyebrow">Research</p>
-    <h1>Problems I have been thinking about.</h1>
+    <h1>Research in aircraft systems and computational mechanics.</h1>
     <p class="page-intro">
-      Work spanning robot task and motion planning, foundation models, and computational models of
-      human reasoning.
+      Work spanning structural health monitoring, finite element simulation, machine learning, and
+      experimental aircraft systems.
     </p>
   </header>
 
@@ -34,6 +34,7 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
             />
             <div class="work-media">
               <img
+                class:list={{ mediaContain: item.data.imageFit === 'contain' }}
                 src={withBase(item.data.image)}
                 alt={item.data.imageAlt}
                 width="720"
@@ -57,7 +58,11 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
               </p>
               {item.data.award && <p class="award">{item.data.award}</p>}
               <div class="link-row card-actions">
-                <a href={withBase(`research/${item.id}/`)}>Read overview<span aria-hidden="true">→</span></a>
+                {item.data.projectPage && (
+                  <a href={withBase(item.data.projectPage)}>
+                    Project Page<span aria-hidden="true">→</span>
+                  </a>
+                )}
                 {item.data.links.map((link) => (
                   <a href={link.url} target="_blank" rel="noreferrer">
                     {link.label}<span aria-hidden="true">↗</span>

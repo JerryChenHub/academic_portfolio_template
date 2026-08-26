@@ -1,0 +1,61 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
+---
+
+<SiteLayout
+  title="Smart Sensor Placement Project"
+  description="A template for the Smart Sensor Placement project page."
+  active="research"
+  image="media/smart_sensor_placement_system.webp"
+>
+  <article class="detail-page shell">
+    <a class="back-link" href={withBase('research/smart_sensor_placement/')}>
+      <span aria-hidden="true">←</span> Research overview
+    </a>
+
+    <header class="detail-header">
+      <div class="work-meta">
+        <span>Project Page</span>
+        <span>Template</span>
+      </div>
+      <h1>Smart Sensor Placement</h1>
+      <p class="detail-summary">
+        This page is a template for the full project presentation. It can later organize the
+        simulation workflow, dataset, sensor placement method, and results.
+      </p>
+      <div class="link-row detail-actions">
+        <a href={withBase('research/smart_sensor_placement/')}>
+          Research overview<span aria-hidden="true">→</span>
+        </a>
+        <a
+          href="https://arc.aiaa.org/doi/abs/10.2514/6.2026-4678"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Paper<span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </header>
+
+    <figure class="detail-media">
+      <img
+        class="mediaContain"
+        src={withBase('media/smart_sensor_placement_system.webp')}
+        alt="System diagram of fiber Bragg grating sensor clusters across a Boeing 747"
+        width="1280"
+        height="800"
+      />
+    </figure>
+
+    <div class="prose">
+      <h2>Planned structure</h2>
+      <p>
+        Future sections can cover the NX Nastran simulation workflow, flight conditions, damage
+        generation, dataset design, machine learning method, and Bayes risk results.
+      </p>
+    </div>
+  </article>
+</SiteLayout>

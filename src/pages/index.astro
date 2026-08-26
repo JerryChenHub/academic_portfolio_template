@@ -77,6 +77,7 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
             />
             <div class="work-media">
               <img
+                class:list={{ mediaContain: item.data.imageFit === 'contain' }}
                 src={withBase(item.data.image)}
                 alt={item.data.imageAlt}
                 width="720"
@@ -101,6 +102,11 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
               </p>
               {item.data.award && <p class="award">{item.data.award}</p>}
               <div class="link-row card-actions">
+                {item.data.projectPage && (
+                  <a href={withBase(item.data.projectPage)}>
+                    Project Page<span aria-hidden="true">→</span>
+                  </a>
+                )}
                 {item.data.links.slice(0, 2).map((link) => (
                   <a href={link.url} target="_blank" rel="noreferrer">
                     {link.label}<span aria-hidden="true">↗</span>

@@ -44,6 +44,11 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
       </p>
       {entry.data.award && <p class="award detail-award">{entry.data.award}</p>}
       <div class="link-row detail-actions">
+        {entry.data.projectPage && (
+          <a href={withBase(entry.data.projectPage)}>
+            Project Page<span aria-hidden="true">→</span>
+          </a>
+        )}
         {entry.data.links.map((link) => (
           <a href={link.url} target="_blank" rel="noreferrer">
             {link.label}<span aria-hidden="true">↗</span>
@@ -54,6 +59,7 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
 
     <figure class="detail-media">
       <img
+        class:list={{ mediaContain: entry.data.imageFit === 'contain' }}
         src={withBase(entry.data.image)}
         alt={entry.data.imageAlt}
         width="1280"
@@ -64,5 +70,22 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
     <div class="prose">
       <Content />
     </div>
+
+    {
+      entry.data.detailImage && (
+        <figure class="detail-figure">
+          <img
+            src={withBase(entry.data.detailImage)}
+            alt={entry.data.detailImageAlt ?? ''}
+            width="1280"
+            height="480"
+            loading="lazy"
+          />
+          {entry.data.detailImageCaption && (
+            <figcaption>{entry.data.detailImageCaption}</figcaption>
+          )}
+        </figure>
+      )
+    }
   </article>
 </SiteLayout>
