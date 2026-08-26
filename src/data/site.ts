@@ -36,9 +36,8 @@ export const profile = {
 };
 
 export const socialLinks = [
-  { label: 'Email', url: 'mailto:jingcao@mit.edu' },
+  { label: 'Email', url: 'mailto:boyangc4@uci.edu' },
   { label: 'LinkedIn', url: 'https://www.linkedin.com/in/jjingcao/' },
-  { label: 'X', url: 'https://x.com/_jingcao' },
   { label: 'GitHub', url: 'https://github.com/jca0' },
   { label: 'Scholar', url: 'https://scholar.google.com/citations?user=sDHKAT0AAAAJ&hl=en' },
 ];
