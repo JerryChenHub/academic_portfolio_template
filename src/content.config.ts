@@ -32,4 +32,38 @@ const research = defineCollection({
   }),
 });
 
-export const collections = { research };
+const mentorship = defineCollection({
+  loader: glob({
+    base: './src/content/mentorship',
+    pattern: '**/*.md',
+  }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    period: z.string(),
+    role: z.string(),
+    order: z.number(),
+    featured: z.boolean().default(false),
+    image: z.string(),
+    thumbnail: z.string(),
+    imageAlt: z.string(),
+    imageCaption: z.string(),
+    galleryHeading: z.string().default('In the lab'),
+    gallery: z.array(z.object({
+      image: z.string(),
+      alt: z.string(),
+      caption: z.string(),
+      width: z.number(),
+      height: z.number(),
+    })),
+    video: z.object({
+      src: z.string(),
+      poster: z.string(),
+      width: z.number().int().positive().default(576),
+      height: z.number().int().positive().default(1024),
+      caption: z.string(),
+    }).optional(),
+  }),
+});
+
+export const collections = { research, mentorship };

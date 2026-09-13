@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import MentorshipCard from '../../components/MentorshipCard.astro';
+import { profile } from '../../data/site';
+
+const mentorship = (await getCollection('mentorship')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<SiteLayout
+  title="Mentorship"
+  description={`${profile.name}'s experiences mentoring students in research, engineering design, and experimental work.`}
+  active="mentorship"
+>
+  <header class="page-header shell mentorship-header">
+    <p class="eyebrow">Mentorship</p>
+    <h1>Sharing the joy of research and design.</h1>
+    <p class="page-intro">
+      Helping students explore engineering through experimental design, practical work, and the
+      process of making sense of data.
+    </p>
+  </header>
+
+  <section class="section shell mentorship-index" aria-label="Mentorship experiences">
+    <div class="work-list">
+      {mentorship.map((entry) => <MentorshipCard entry={entry} heading="h2" />)}
+    </div>
+  </section>
+</SiteLayout>

@@ -5,7 +5,7 @@ import { profile } from '../data/site';
 interface Props {
   title?: string;
   description: string;
-  active?: 'home' | 'research';
+  active?: 'home' | 'research' | 'mentorship';
   image?: string;
   noindex?: boolean;
 }
@@ -50,6 +50,10 @@ const socialImage = new URL(withBase(image ?? 'og.png'), Astro.site);
           <a
             href={withBase('research/')}
             aria-current={active === 'research' ? 'page' : undefined}>Research</a
+          >
+          <a
+            href={withBase('mentorship/')}
+            aria-current={active === 'mentorship' ? 'page' : undefined}>Mentorship</a
           >
         </nav>
       </div>

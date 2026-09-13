@@ -571,3 +571,173 @@ h1 {
     transition: none;
   }
 }
+
+.home-mentorship {
+  padding-block: clamp(32px, 4vw, 48px);
+}
+
+.home-mentorship .section-heading h2 {
+  font-size: clamp(32px, 4vw, 42px);
+}
+
+.home-mentorship .section-heading {
+  margin-bottom: 24px;
+}
+
+.home-mentorship .mentorship-card {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.home-mentorship .mentorship-card + .mentorship-card {
+  margin-top: 24px;
+}
+
+.home-mentorship .mentorship-card:not(:last-child) {
+  padding-bottom: 24px;
+}
+
+.mentorship-card {
+  align-items: center;
+}
+
+.mentorship-card .work-media img {
+  aspect-ratio: 4 / 3;
+}
+
+.mentorship-card .work-copy > p:last-child {
+  margin-bottom: 0;
+}
+
+.mentorship-card .card-hit:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+}
+
+.mentorship-index {
+  padding-top: 0;
+}
+
+.mentorship-index .work-list {
+  border-top: 0;
+}
+
+.mentorship-header h1 {
+  max-width: 850px;
+}
+
+.mentorship-hero {
+  margin: 40px 0 48px;
+}
+
+.mentorship-hero img {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+}
+
+.mentorship-detail figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.mentorship-prose {
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.mentorship-prose a {
+  color: var(--accent);
+}
+
+.mentorship-gallery-section {
+  margin-top: 56px;
+}
+
+.mentorship-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 24px;
+  align-items: start;
+}
+
+.mentorship-gallery figure {
+  margin: 0;
+}
+
+.mentorship-gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+}
+
+.mentorship-gallery figure:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.mentorship-moments {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px;
+  align-items: start;
+  margin-top: 48px;
+}
+
+.mentorship-moments-single {
+  grid-template-columns: 1fr;
+}
+
+.mentorship-group {
+  margin: 0;
+}
+
+.mentorship-group img {
+  width: auto;
+  max-height: 560px;
+  margin-inline: auto;
+  border-radius: 3px;
+}
+
+.mentorship-moments figcaption {
+  text-align: center;
+}
+
+.mentorship-video {
+  width: 100%;
+  max-width: 315px;
+  margin: 0 auto;
+}
+
+.mentorship-video-landscape {
+  max-width: 100%;
+}
+
+.mentorship-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  background: var(--accent-soft);
+}
+
+@media (max-width: 720px) {
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    padding-block: 14px;
+  }
+
+  .mentorship-gallery,
+  .mentorship-moments {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .mentorship-hero {
+    margin-top: 32px;
+    margin-bottom: 36px;
+  }
+}
