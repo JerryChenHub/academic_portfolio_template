@@ -1,0 +1,55 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  caption: string;
+  image?: string;
+  alt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  ratio?: string;
+  kind?: 'Photo' | 'CAD render' | 'PCB render' | 'Figure';
+  wide?: boolean;
+}
+
+const { id, label, caption, image, alt, imageWidth, imageHeight, ratio = '3 / 2', kind = 'Photo', wide = false } = Astro.props;
+const withBase = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+---
+
+<figure class="image-slot" data-image-slot={id} style={`--image-ratio: ${wide ? '16 / 9' : ratio}`}>
+  {image ? (
+    <a href={withBase(image)} target="_blank" rel="noreferrer" aria-label={`Open ${label} at full size`}>
+      <img src={withBase(image)} alt={alt ?? label} width={imageWidth} height={imageHeight} loading="lazy" />
+    </a>
+  ) : (
+    <div class:list={['image-placeholder', { wide }]} role="img" aria-label={`${label}: ${kind.toLowerCase()} to come`}>
+      <span class="placeholder-kind">{kind} to come</span>
+      <span class="placeholder-label">{label}</span>
+    </div>
+  )}
+  <figcaption>{caption}</figcaption>
+</figure>
+
+<style>
+  .image-slot { min-width: 0; margin: 0; }
+  .image-slot > a { display: block; border-radius: 3px; overflow: hidden; }
+  .image-slot img { display: block; width: 100%; height: auto; }
+  .image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    aspect-ratio: var(--image-ratio);
+    max-height: 260px;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: var(--accent-soft);
+    text-align: center;
+  }
+  .placeholder-kind { color: var(--muted); font-size: 12px; }
+  .placeholder-label { color: var(--ink); font-size: 17px; font-weight: 600; }
+  figcaption { margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+</style>

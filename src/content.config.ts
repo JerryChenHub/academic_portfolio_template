@@ -4,7 +4,7 @@ import { z } from 'astro/zod';
 
 const linkSchema = z.object({
   label: z.string(),
-  url: z.url(),
+  url: z.union([z.url(), z.string().regex(/^\/?(?:media|reports|slides)\//)]),
 });
 
 const research = defineCollection({
@@ -27,6 +27,7 @@ const research = defineCollection({
     detailImageAlt: z.string().optional(),
     detailImageCaption: z.string().optional(),
     projectPage: z.string().optional(),
+    cardLink: z.string().optional(),
     award: z.string().optional(),
     links: z.array(linkSchema),
   }),

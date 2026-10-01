@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import MentorshipCard from '../components/MentorshipCard.astro';
-import { profile, project, socialLinks } from '../data/site';
+import { profile, projects, socialLinks } from '../data/site';
 
 const research = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
 const mentorship = (await getCollection('mentorship', ({ data }) => data.featured))
@@ -76,7 +76,7 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
           <article class="work-card">
             <a
               class="card-hit"
-              href={withBase(`research/${item.id}/`)}
+              href={withBase(item.data.cardLink ?? `research/${item.id}/`)}
               aria-label={`Read ${item.data.title}`}
             />
             <div class="work-media">
@@ -108,11 +108,11 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
               <div class="link-row card-actions">
                 {item.data.projectPage && (
                   <a href={withBase(item.data.projectPage)}>
-                    Project Page<span aria-hidden="true">→</span>
+                    Project Page<span aria-hidden="true">↗</span>
                   </a>
                 )}
                 {item.data.links.slice(0, 2).map((link) => (
-                  <a href={link.url} target="_blank" rel="noreferrer">
+                  <a href={link.url.startsWith('http') ? link.url : withBase(link.url)} target="_blank" rel="noreferrer">
                     {link.label}<span aria-hidden="true">↗</span>
                   </a>
                 ))}
@@ -132,31 +132,53 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
       </div>
     </div>
 
-    <article class="project-row">
-      <div class="project-media">
-        <img
-          src={withBase(project.image)}
-          alt={project.imageAlt}
-          width="720"
-          height="450"
-          loading="lazy"
-        />
-      </div>
-      <div class="project-copy">
-        <p class="work-meta"><span>{project.context}</span></p>
-        <h3>{project.title}</h3>
-        <p>{project.summary}</p>
-        <div class="link-row">
-          {
-            project.links.map((link) => (
-              <a href={link.url} target="_blank" rel="noreferrer">
-                {link.label}<span aria-hidden="true">↗</span>
-              </a>
-            ))
-          }
-        </div>
-      </div>
-    </article>
+    {
+      projects.map((project) => {
+        const Media = project.imageUrl ? 'a' : 'div';
+        const externalImageLink = project.imageUrl?.startsWith('http');
+        return (
+          <article class="project-row">
+            <Media
+              class="project-media"
+              href={project.imageUrl ? (externalImageLink ? project.imageUrl : withBase(project.imageUrl)) : undefined}
+              target={externalImageLink ? '_blank' : undefined}
+              rel={externalImageLink ? 'noreferrer' : undefined}
+              aria-label={project.imageUrl ? `View ${project.title} ${externalImageLink ? 'news' : 'project page'}` : undefined}
+            >
+              <img
+                src={withBase(project.image)}
+                alt={project.imageAlt}
+                width={project.imageWidth}
+                height={project.imageHeight}
+                style={`aspect-ratio: ${project.imageWidth} / ${project.imageHeight}`}
+                loading="lazy"
+              />
+            </Media>
+            <div class="project-copy">
+              <p class="work-meta"><span>{project.context}</span></p>
+              <h3>{project.title}</h3>
+              <p>{project.summary}</p>
+              <div class="link-row">
+                {project.projectPage && (
+                  <a href={withBase(project.projectPage)}>
+                    Project Page<span aria-hidden="true">↗</span>
+                  </a>
+                )}
+                {project.links.map((link) => (
+                  <a
+                    href={link.url.startsWith('http') ? link.url : withBase(link.url)}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {link.label}<span aria-hidden="true">↗</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </article>
+        );
+      })
+    }
   </section>
   <section class="section shell home-mentorship" id="mentorship" aria-labelledby="mentorship-heading">
     <div class="section-heading">

@@ -1,0 +1,231 @@
+---
+import { getEntry } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import ProjectImageSlot from '../../components/ProjectImageSlot.astro';
+
+const entry = await getEntry('research', 'propeller_scaling');
+if (!entry) throw new Error('Propeller scaling research entry is missing');
+const project = entry.data;
+const withBase = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+const images = {
+  teststandV1: 'media/propeller_teststand_v1.webp',
+  teststandV2: 'media/propeller_teststand_v2.webp',
+  teststandV3: 'media/propeller_teststand_v3.webp',
+  powerControl: 'media/propeller_power_control.webp',
+  teststandCad: 'media/propeller_teststand_cad.webp',
+  pcbControl: 'media/propeller_pcb_control.webp',
+  pcbSensor: 'media/propeller_pcb_sensor.webp',
+  professorMentor: 'media/propeller_professor_huynh.webp',
+  designDiscussion: 'media/propeller_design_discussion.webp',
+  preliminaryResults: 'media/propeller_spacing_comparison.webp',
+  aiaaGroup1: 'media/propeller_aiaa_blue_skies_team.webp',
+  aiaaGroup2: 'media/propeller_aiaa_aircraft_design_author.webp',
+  urop: 'media/propeller_urop_poster.webp',
+  uropFriends: 'media/propeller_urop_friends.webp',
+};
+const measurements = [
+  { diameter: 6, rpm: '17,040', image: 'media/propeller_surface_d06.webp' },
+  { diameter: 13, rpm: '7,819', image: 'media/propeller_surface_d13.webp' },
+  { diameter: 40, rpm: '2,566', image: 'media/propeller_surface_d40.webp' },
+];
+---
+
+<SiteLayout title={project.shortTitle} description={project.summary} active="research" image={project.image}>
+  <article class="detail-page shell propeller-project">
+    <a class="back-link" href={withBase('research/')}><span aria-hidden="true">←</span> All research</a>
+
+    <header class="detail-header">
+      <div class="work-meta"><span>{project.year}</span><span>Aircraft Systems Laboratory · UC Irvine</span></div>
+      <h1>{project.title}</h1>
+      <p class="detail-summary">Building the equipment, learning through each version, and putting my ideas to the test.</p>
+      <p class="detail-authors"><strong>Boyang Chen</strong> · Faculty mentor: Prof. Jacqueline Huynh</p>
+      <div class="link-row detail-actions">
+        {project.links.map((link) => (
+          <a href={link.url.startsWith('http') ? link.url : withBase(link.url)} target="_blank" rel="noreferrer">
+            {link.label}<span aria-hidden="true">↗</span>
+          </a>
+        ))}
+        <a href={withBase('reports/UROP_Propeller_Scaling_Gemini_v5.pdf')} target="_blank" rel="noreferrer">
+          Poster<span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </header>
+
+    <section class="story-section" aria-labelledby="building-heading">
+      <div class="prose">
+        <h2 id="building-heading">Three generations of learning</h2>
+        <p>
+          I led the modeling, design, and construction of our lab's anechoic chamber.
+          Building the equipment inside it has been a meaningful design and learning journey:
+          from a mini test stand controlled by analog signals, to a mobile stand with precise
+          digital RPM control, and now Test Stand V3 with stepper positioning, infrared sensors
+          for RPM control, and load cells for force measurements.
+        </p>
+      </div>
+      <div class="image-grid generations">
+        <ProjectImageSlot id="teststand-v1" label="Test Stand V1" caption="Test Stand V1: my first mini test stand, controlled by analog signals." alt="The first mini test stand on a lab bench, with its aluminum frame, propeller mount, and breadboard wiring" imageWidth={1800} imageHeight={1800} image={images.teststandV1} />
+        <ProjectImageSlot id="teststand-v2" label="Test Stand V2" caption="Test Stand V2: a mobile setup with precise digital RPM control." alt="Two mobile propeller test stands with aluminum frames and control wiring in the lab" imageWidth={1600} imageHeight={900} image={images.teststandV2} />
+      </div>
+      <div class="image-grid latest-setup">
+        <ProjectImageSlot id="teststand-v3" label="Test Stand V3" caption="Test Stand V3: stepper positioning, infrared RPM control, and load cell measurements." alt="Test Stand V3 with a propeller motor, load cell mount, and motorized positioning rails" imageWidth={1012} imageHeight={1800} image={images.teststandV3} />
+        <ProjectImageSlot id="power-control" label="Power and control unit" caption="The power and control unit for Test Stand V3." alt="The assembled power and control unit with power supplies, motor drivers, and the main control PCB in an aluminum frame" imageWidth={1800} imageHeight={1013} image={images.powerControl} />
+      </div>
+    </section>
+
+    <section class="story-section" aria-labelledby="design-heading">
+      <div class="prose">
+        <h2 id="design-heading">From SolidWorks to my first PCB</h2>
+        <p>
+          I designed all the hardware and software myself, from the SolidWorks models and
+          material selection to assembly and code. The software improved with each generation,
+          alongside the hardware.
+        </p>
+      </div>
+      <div class="cad-figure">
+        <ProjectImageSlot id="teststand-cad" label="Full test stand assembly in SolidWorks" caption="My full test stand assembly in SolidWorks, with the mobile platform, fixed stand, and power station." alt="SolidWorks rendering of my full assembly with two propeller test stands, motorized positioning rails, and a separate power station" imageWidth={1734} imageHeight={1431} kind="CAD render" image={images.teststandCad} />
+      </div>
+      <div class="prose followup-copy">
+        <p>
+          As the wiring grew, I moved from Arduino and breadboards to a PCB to bring it all
+          together. It was the first PCB I had ever designed. The setup now has a power and
+          control board and a smaller sensor interface board.
+        </p>
+      </div>
+      <div class="image-grid pcb-pair">
+        <ProjectImageSlot id="pcb-control" label="Power and control PCB" caption="My custom PCB for power distribution and test stand control." alt="Render of the Dual Stand Control PCB with an Arduino Nano, power connectors, and control interfaces" imageWidth={1800} imageHeight={1413} kind="PCB render" image={images.pcbControl} />
+        <ProjectImageSlot id="pcb-sensor" label="Sensor interface PCB" caption="The sensor interface connects the load cell, infrared RPM sensor, and ESC." alt="Render of the GX12 sensor interface PCB with load cell, infrared sensor, and ESC connections" imageWidth={1574} imageHeight={1800} kind="PCB render" image={images.pcbSensor} />
+      </div>
+      <div class="prose followup-copy">
+        <p>
+          Prof. Jacqueline Huynh's guidance and help have been an important part of this process.
+          Each version gave me something new to learn and another chance to improve the design.
+        </p>
+      </div>
+      <div class="image-grid mentor-pair">
+        <ProjectImageSlot id="professor-mentor" label="With Prof. Jacqueline Huynh" caption="With my mentor, Prof. Jacqueline Huynh." alt="Me with Prof. Jacqueline Huynh outdoors" imageWidth={861} imageHeight={855} image={images.professorMentor} />
+        <ProjectImageSlot id="design-discussion" label="Working through the design" caption="Working through my test stand design with Prof. Jacqueline Huynh." alt="Me discussing a test stand design with Prof. Jacqueline Huynh in the lab" imageWidth={1072} imageHeight={1059} image={images.designDiscussion} />
+      </div>
+      <div class="prose followup-copy">
+        <p>
+          This equipment has also welcomed several groups of visiting middle and high school
+          students. Letting them control the setup and experience the research process has
+          been especially meaningful to me.
+        </p>
+      </div>
+    </section>
+
+    <section class="story-section" aria-labelledby="results-heading">
+      <div class="prose">
+        <h2 id="results-heading">The first experiments</h2>
+        <p>
+          Can experiments with small propellers tell us something about noise at larger scales?
+          The first measurements at 6, 13, and 40 cm show a clear pattern across all three sizes.
+          Their noise levels differ, but they change in similar ways as the spacing changes.
+          Seeing that in the first results was exciting, and gave me a reason to keep exploring.
+        </p>
+      </div>
+      <figure class="surface-results">
+        <div class="surface-grid">
+          {measurements.map((measurement) => (
+            <div class="surface-panel">
+              <h3>D = {measurement.diameter} cm</h3>
+              <p>{measurement.rpm} rpm per rotor</p>
+              <a href={withBase(measurement.image)} target="_blank" rel="noreferrer" aria-label={`Open the ${measurement.diameter} cm measurements at full size`}>
+                <img src={withBase(measurement.image)} alt={`Preliminary sound level surface for ${measurement.diameter} cm propellers across lateral offset X/D and axial spacing Z/D`} width="1768" height="1508" loading="lazy" />
+              </a>
+            </div>
+          ))}
+        </div>
+        <div class="shared-scale">
+          <p>Average A weighted sound pressure level [dB(A)]</p>
+          <img src={withBase('media/propeller_result_scale.webp')} alt="Shared color scale from 65 to 95 dB(A), from purple through green to yellow" width="1690" height="260" loading="lazy" />
+        </div>
+        <figcaption>
+          Preliminary measurements at nearly matched tip Mach number, approximately 0.157.
+          The plots share the same axes and color scale. Surfaces cover measured positions only;
+          the 13 cm data end at Z/D = 0.875. Values are the arithmetic mean of nine reported
+          microphone levels, including two repeated entries, as shown in the presentation.
+        </figcaption>
+      </figure>
+      <div class="prose followup-copy">
+        <p>
+          At Z/D = 0.25, all three sizes share a sampled peak at X/D = 0.55.
+          Next, I want to nail down that relationship with more experiments and see
+          whether it can help predict the pattern at another scale.
+        </p>
+      </div>
+      <div class="comparison-figure">
+        <ProjectImageSlot id="preliminary-results" label="Comparing the three scales" caption="A slice at Z/D = 0.25 makes the shared peak easier to see. These are preliminary results." alt="Line plot from slide 11 comparing the three propeller diameters, with a common sampled peak at lateral offset X/D of 0.55" imageWidth={942} imageHeight={615} kind="Figure" image={images.preliminaryResults} />
+      </div>
+    </section>
+
+    <section class="story-section" aria-labelledby="sharing-heading">
+      <div class="prose">
+        <h2 id="sharing-heading">Sharing the work</h2>
+        <p>
+          I was honored to share this work as a speaker at the AIAA ASAT Annual Conference
+          and at the UROP Symposium. At AIAA, I also joined our Blue Skies team for a group
+          presentation alongside my individual talk.
+        </p>
+      </div>
+      <div class="image-grid aiaa-pair">
+        <ProjectImageSlot id="aiaa-group-1" label="Blue Skies team at AIAA" caption="With our Blue Skies team at the AIAA Annual Conference." alt="Our Blue Skies team posing together at the AIAA Annual Conference" imageWidth={1800} imageHeight={1350} image={images.aiaaGroup1} />
+        <ProjectImageSlot id="aiaa-group-2" label="Meeting the author of Aircraft Design" caption="I got to meet the author of Aircraft Design!" alt="Me holding Aircraft Design and posing with its author at AIAA" imageWidth={1800} imageHeight={1800} image={images.aiaaGroup2} />
+      </div>
+      <div class="image-grid urop-pair followup-image">
+        <ProjectImageSlot id="urop" label="Presenting at UROP" caption="With my poster at the UROP Symposium." alt="Me standing beside my propeller noise research poster at the UROP Symposium" imageWidth={1800} imageHeight={1800} image={images.urop} />
+        <ProjectImageSlot id="urop-friends" label="Friends at UROP" caption="Meeting up with friends who were also presenting at UROP." alt="A selfie with friends who were also presenting at the UROP Symposium" imageWidth={1275} imageHeight={1233} image={images.uropFriends} />
+      </div>
+    </section>
+
+    <section class="story-section closing-section" aria-labelledby="next-heading">
+      <div class="prose">
+        <h2 id="next-heading">The story is not over yet</h2>
+        <p>
+          The next step is full automation, with help from OpenAI. Once the system is ready,
+          I will be able to put my hypothesis to the test. I am looking forward to seeing
+          what comes next.
+        </p>
+        <div class="link-row proposal-link">
+          <a href={withBase('reports/SURP_2025_Propeller_Scaling_Proposal.pdf')} target="_blank" rel="noreferrer">
+            2025 SURP Proposal<span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </article>
+</SiteLayout>
+
+<style>
+  .story-section { margin-top: clamp(42px, 6vw, 72px); }
+  .story-section .prose { max-width: 760px; }
+  .story-section .prose h2 { margin-top: 0; }
+  .image-grid { display: grid; align-items: start; gap: 28px; margin-top: 28px; }
+  .generations { grid-template-columns: 1fr 1.7778fr; }
+  .latest-setup { grid-template-columns: 0.8fr 1.25fr; align-items: center; max-width: 900px; margin: 40px auto 0; }
+  .aiaa-pair { grid-template-columns: 4fr 3fr; }
+  .urop-pair { grid-template-columns: 1fr 1.0341fr; }
+  .mentor-pair { grid-template-columns: 1.007fr 1.0123fr; }
+  .pcb-pair { grid-template-columns: 1.4555fr 1fr; gap: 56px; max-width: 800px; margin-inline: auto; }
+  .cad-figure { margin: 32px auto 0; max-width: 900px; }
+  .comparison-figure { margin: 28px auto 0; max-width: 860px; }
+  .followup-copy { margin-top: 36px; }
+  .followup-image { margin-top: 32px; }
+  .closing-section { padding-top: 32px; border-top: 1px solid var(--line); }
+  .proposal-link { margin-top: 20px; }
+  .surface-results { margin: 32px 0 0; }
+  .surface-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .surface-panel h3 { margin: 0; color: var(--accent); font-family: inherit; font-size: 18px; text-align: center; }
+  .surface-panel p { margin: 3px 0 12px; color: var(--muted); font-size: 13px; text-align: center; }
+  .surface-panel a, .surface-panel img { display: block; width: 100%; }
+  .shared-scale { max-width: 420px; margin: 22px auto; }
+  .shared-scale p { margin: 0 0 8px; color: var(--muted); text-align: center; font-size: 13px; }
+  .shared-scale img { width: 100%; height: auto; }
+  .surface-results > figcaption { max-width: 760px; margin: 20px auto 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+  @media (max-width: 720px) {
+    .generations, .latest-setup, .aiaa-pair, .urop-pair, .mentor-pair, .pcb-pair, .surface-grid { grid-template-columns: 1fr; }
+    .image-grid, .surface-grid { gap: 32px; }
+    .pcb-pair { max-width: 460px; }
+    .surface-panel { max-width: 460px; margin-inline: auto; }
+  }
+</style>

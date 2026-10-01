@@ -354,6 +354,62 @@ h1 {
   align-items: center;
 }
 
+.project-row + .project-row {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+.nasa-project .nasa-overview {
+  margin-inline: 0;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.nasa-project .nasa-overview h2 {
+  margin-top: 0;
+}
+
+.nasa-section {
+  margin-top: 48px;
+}
+
+.nasa-figure {
+  margin: 24px 0 0;
+}
+
+.nasa-contribution-part {
+  margin-top: 36px;
+}
+
+.nasa-contribution-part h3 {
+  margin-bottom: 12px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+.nasa-speech {
+  max-width: 600px;
+}
+
+.nasa-figure img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+
+.nasa-figure figcaption {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.nasa-figure figcaption a {
+  color: var(--accent);
+}
+
 .site-footer {
   padding-block: 24px;
   color: var(--muted);

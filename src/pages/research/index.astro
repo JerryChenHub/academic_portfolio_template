@@ -29,7 +29,7 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
           <article class="work-card index-card">
             <a
               class="card-hit"
-              href={withBase(`research/${item.id}/`)}
+              href={withBase(item.data.cardLink ?? `research/${item.id}/`)}
               aria-label={`Read ${item.data.title}`}
             />
             <div class="work-media">
@@ -60,11 +60,11 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
               <div class="link-row card-actions">
                 {item.data.projectPage && (
                   <a href={withBase(item.data.projectPage)}>
-                    Project Page<span aria-hidden="true">→</span>
+                    Project Page<span aria-hidden="true">↗</span>
                   </a>
                 )}
                 {item.data.links.map((link) => (
-                  <a href={link.url} target="_blank" rel="noreferrer">
+                  <a href={link.url.startsWith('http') ? link.url : withBase(link.url)} target="_blank" rel="noreferrer">
                     {link.label}<span aria-hidden="true">↗</span>
                   </a>
                 ))}

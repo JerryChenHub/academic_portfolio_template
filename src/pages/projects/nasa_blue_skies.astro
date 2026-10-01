@@ -1,0 +1,187 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { nasaBlueSkies } from '../../data/site';
+
+const base = import.meta.env.BASE_URL;
+const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
+const reportUrl = withBase(nasaBlueSkies.links[0].url);
+const contributions = [
+  {
+    id: 'onboard-sensing',
+    title: 'Onboard sensing',
+    text: 'I researched fiber Bragg grating sensors and piezoelectric transducers, and how they can work together to detect aircraft damage.',
+    figures: [
+      {
+        image: 'media/nasa_blue_skies_sensing_cluster.webp',
+        alt: 'Figure 2.1 showing an aircraft sensing cluster with fiber Bragg grating sensors and a piezoelectric transducer',
+        width: 804,
+        height: 588,
+        displayWidth: 560,
+        label: 'Figure 2.1',
+        caption: 'The sensing concept pairs piezoelectric excitation with fiber Bragg grating measurements.',
+        page: 5,
+      },
+    ],
+  },
+  {
+    id: 'damage-mechanisms',
+    title: 'Damage mechanisms',
+    text: 'I compared impact, corrosion, and fatigue damage and their physical effects. I used Ansys LS DYNA for bird strike simulations and Ansys Mechanical for structural analysis.',
+    figures: [
+      {
+        image: 'media/nasa_blue_skies_damage_types_report.webp',
+        alt: 'Section 2.2.1 and Table 2.1 comparing aircraft damage types, structural response, and data acquisition methods',
+        width: 1986,
+        height: 1292,
+        displayWidth: 980,
+        label: 'Table 2.1',
+        caption: 'Damage mechanisms, structural response, and ways to generate representative data.',
+        page: 6,
+      },
+    ],
+  },
+  {
+    id: 'graph-learning',
+    title: 'Graph neural networks',
+    text: 'I used PyTorch to explore GNNs for spatial sensor data and ran a small study to test whether they could recognize damage patterns.',
+    figures: [
+      {
+        image: 'media/nasa_blue_skies_model_workflow.webp',
+        alt: 'Figure A.2 connecting simulation and experimental data to sensor placement and GNN damage detection',
+        width: 1982,
+        height: 1176,
+        displayWidth: 980,
+        label: 'Figure A.2',
+        caption: 'The proposed workflow connects simulation and experimental data with sensor placement and damage recognition.',
+        page: 15,
+      },
+      {
+        image: 'media/nasa_blue_skies_gnn_architecture.webp',
+        alt: 'Figure A.3 showing the proposed GNN branches for global damage detection and damage localization and classification',
+        width: 1984,
+        height: 860,
+        displayWidth: 980,
+        label: 'Figure A.3',
+        caption: 'The proposed GNN framework separates global damage detection from localization and classification.',
+        page: 16,
+      },
+    ],
+  },
+];
+---
+
+<SiteLayout
+  title="AIRSHIELD · NASA Blue Skies Competition"
+  description={nasaBlueSkies.summary}
+  image={nasaBlueSkies.poster.image}
+>
+  <article class="detail-page shell nasa-project">
+    <a class="back-link" href={withBase('#projects')}>
+      <span aria-hidden="true">←</span> All projects
+    </a>
+
+    <header class="detail-header">
+      <div class="work-meta">
+        <span>{nasaBlueSkies.context}</span>
+        <span>{nasaBlueSkies.title}</span>
+      </div>
+      <h1>AIRSHIELD</h1>
+      <p class="detail-summary">
+        Detecting aircraft damage with onboard sensors and machine learning.
+      </p>
+      <div class="link-row detail-actions">
+        {nasaBlueSkies.links.map((link) => (
+          <a
+            href={link.url.startsWith('http') ? link.url : withBase(link.url)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {link.label}<span aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+    </header>
+
+    <section class="nasa-section" aria-labelledby="nasa-overview-heading">
+      <div class="prose nasa-overview">
+        <h2 id="nasa-overview-heading">The idea</h2>
+        <p>
+          AIRSHIELD combines fiber optic sensors, piezoelectric transducers, and machine learning
+          to monitor aircraft structures. Our research, preliminary experiments, and cost analysis
+          supported its commercial potential.
+        </p>
+      </div>
+      <figure class="nasa-figure">
+        <a href={withBase(nasaBlueSkies.poster.image)} target="_blank" rel="noreferrer" aria-label="Open the AIRSHIELD poster at full size">
+          <img
+            src={withBase(nasaBlueSkies.poster.image)}
+            alt={nasaBlueSkies.poster.imageAlt}
+            width={nasaBlueSkies.poster.width}
+            height={nasaBlueSkies.poster.height}
+            loading="lazy"
+          />
+        </a>
+        <figcaption>
+          Our AIRSHIELD concept, from sensing to maintenance.{' '}
+          <a href="https://blueskies.nianet.org/2026-record/" target="_blank" rel="noreferrer">Competition record <span aria-hidden="true">↗</span></a>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="nasa-section" aria-labelledby="nasa-contribution-heading">
+      <div class="prose nasa-overview">
+        <h2 id="nasa-contribution-heading">My contribution</h2>
+        <p>
+          My work focused on onboard sensing, damage mechanisms, structural simulation, and an initial GNN study.
+        </p>
+      </div>
+      {contributions.map((contribution) => (
+        <section class="nasa-contribution-part" aria-labelledby={contribution.id}>
+          <div class="prose nasa-overview">
+            <h3 id={contribution.id}>{contribution.title}</h3>
+            <p>{contribution.text}</p>
+          </div>
+          {contribution.figures.map((figure) => (
+            <figure class="nasa-figure" style={`max-width: ${figure.displayWidth}px`}>
+              <a href={withBase(figure.image)} target="_blank" rel="noreferrer" aria-label={`Open ${figure.label} at full size`}>
+                <img
+                  src={withBase(figure.image)}
+                  alt={figure.alt}
+                  width={figure.width}
+                  height={figure.height}
+                  loading="lazy"
+                />
+              </a>
+              <figcaption>
+                {figure.caption}{' '}
+                <a href={`${reportUrl}#page=${figure.page}`} target="_blank" rel="noreferrer">
+                  {figure.label} in report <span aria-hidden="true">↗</span>
+                </a>
+              </figcaption>
+            </figure>
+          ))}
+        </section>
+      ))}
+    </section>
+
+    <section class="nasa-section" aria-labelledby="nasa-presentation-heading">
+      <div class="prose nasa-overview">
+        <h2 id="nasa-presentation-heading">Presenting at NASA</h2>
+        <p>
+          As one of eight national finalists, we presented at NASA Langley Research Center.
+          Our team received $9,000 in research funding and won the Best Infographic Award.
+        </p>
+      </div>
+      <figure class="nasa-figure nasa-speech">
+        <img
+          src={withBase('media/nasa_blue_skies_speech.jpg')}
+          alt="Our AIRSHIELD team presenting to the audience at NASA Langley Research Center"
+          width="600"
+          height="369"
+          loading="lazy"
+        />
+        <figcaption>Our team presenting AIRSHIELD at NASA Langley.</figcaption>
+      </figure>
+    </section>
+  </article>
+</SiteLayout>

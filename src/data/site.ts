@@ -42,15 +42,48 @@ export const socialLinks = [
   { label: 'Scholar', url: 'https://scholar.google.com/citations?user=sDHKAT0AAAAJ&hl=en' },
 ];
 
-export const project = {
+const projectTemplate = {
   title: 'ObNoDog: Shape Detector on Not a Dog',
   summary:
     "Real-time shape detection and classification on an FPGA using Connected Components Labeling and Moore's Neighbor Tracing.",
   context: 'F24 6.205 Final Project',
   image: 'media/obnodog.webp',
   imageAlt: 'ObNoDog FPGA shape detection demo',
+  imageWidth: 720,
+  imageHeight: 450,
   links: [
     { label: 'Code', url: 'https://github.com/jca0/ObNoDog-final' },
     { label: 'Report', url: 'https://www.mit.edu/~jingcao/docs/ObNoDog.pdf' },
   ],
 };
+
+export const nasaBlueSkies = {
+  title: 'NASA Blue Skies Competition',
+  summary:
+    'We designed AIRSHIELD to detect aircraft damage with onboard sensors and machine learning.',
+  context: '2026 · National Finalist',
+  image: 'media/nasa_blue_skies_team.jpg',
+  imageAlt: 'The UC Irvine AIRSHIELD team at the 2026 NASA Blue Skies Competition',
+  imageWidth: 400,
+  imageHeight: 300,
+  imageUrl: 'https://engineering.uci.edu/news/2026/6/uc-irvine-students-win-nasa-blue-skies-award',
+  projectPage: 'projects/nasa_blue_skies/',
+  poster: {
+    image: 'media/nasa_blue_skies_poster.webp',
+    imageAlt: 'AIRSHIELD project poster for the 2026 NASA Blue Skies Competition',
+    width: 2400,
+    height: 1802,
+  },
+  links: [
+    { label: 'Report', url: 'reports/2026_NASA_Blue_Skies_Competition_Technical_Report.pdf' },
+    {
+      label: 'UCI News',
+      url: 'https://engineering.uci.edu/news/2026/6/uc-irvine-students-win-nasa-blue-skies-award',
+    },
+  ],
+};
+
+export const projects = [
+  nasaBlueSkies,
+  { ...projectTemplate, imageUrl: undefined, projectPage: undefined },
+];
