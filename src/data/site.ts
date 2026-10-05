@@ -83,7 +83,24 @@ export const nasaBlueSkies = {
   ],
 };
 
+export const mae106Rover = {
+  title: 'Pneumatic Rover',
+  summary:
+    'We built a rover powered by compressed air for MAE 106. I coordinated the team, helped with the SolidWorks design, and wrote and tuned the control code. We placed second in our competition group.',
+  context: 'MAE 106 · UC Irvine',
+  image: 'media/mae106_rover/rover_photo.webp',
+  imageAlt: 'Our pneumatic rover with its air storage tire above the chassis',
+  imageWidth: 1254,
+  imageHeight: 1254,
+  imageUrl: 'projects/mae106_rover/',
+  projectPage: 'projects/mae106_rover/',
+  links: [
+    { label: 'GitHub', url: 'https://github.com/JerryChenHub/Pneumatic-Piston-Rover-Robot' },
+  ],
+};
+
 export const projects = [
   nasaBlueSkies,
+  mae106Rover,
   { ...projectTemplate, imageUrl: undefined, projectPage: undefined },
 ];
