@@ -39,23 +39,8 @@ export const socialLinks = [
   { label: 'Email', url: 'mailto:boyangc4@uci.edu' },
   { label: 'LinkedIn', url: 'https://www.linkedin.com/in/jjingcao/' },
   { label: 'GitHub', url: 'https://github.com/jca0' },
-  { label: 'Scholar', url: 'https://scholar.google.com/citations?user=sDHKAT0AAAAJ&hl=en' },
+  { label: 'Scholar', url: 'https://scholar.google.com/' },
 ];
-
-const projectTemplate = {
-  title: 'ObNoDog: Shape Detector on Not a Dog',
-  summary:
-    "Real-time shape detection and classification on an FPGA using Connected Components Labeling and Moore's Neighbor Tracing.",
-  context: 'F24 6.205 Final Project',
-  image: 'media/obnodog.webp',
-  imageAlt: 'ObNoDog FPGA shape detection demo',
-  imageWidth: 720,
-  imageHeight: 450,
-  links: [
-    { label: 'Code', url: 'https://github.com/jca0/ObNoDog-final' },
-    { label: 'Report', url: 'https://www.mit.edu/~jingcao/docs/ObNoDog.pdf' },
-  ],
-};
 
 export const nasaBlueSkies = {
   title: 'NASA Blue Skies Competition',
@@ -102,5 +87,4 @@ export const mae106Rover = {
 export const projects = [
   nasaBlueSkies,
   mae106Rover,
-  { ...projectTemplate, imageUrl: undefined, projectPage: undefined },
 ];
