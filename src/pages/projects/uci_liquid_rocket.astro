@@ -1,0 +1,286 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { uciLiquidRocket } from '../../data/site';
+
+const withBase = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+const media = (name: string) => withBase(`media/uci_liquid_rocket/${name}.webp`);
+---
+
+<SiteLayout title={uciLiquidRocket.title} description={uciLiquidRocket.summary} image={uciLiquidRocket.image}>
+  <article class="detail-page shell rocket-project">
+    <a class="back-link" href={withBase('#projects')}>
+      <span aria-hidden="true">←</span> All projects
+    </a>
+
+    <header class="detail-header">
+      <div class="work-meta"><span>{uciLiquidRocket.context}</span></div>
+      <h1>{uciLiquidRocket.title}</h1>
+      <p class="detail-summary">
+        From understanding airflow to making parts and helping put the rocket together.
+      </p>
+      <p class="intro-copy">
+        As part of UCI's Launch Vehicle team, I contributed flight CFD simulations,
+        component models in Siemens NX, and practical manufacturing work.
+        My work connected simulation data with team decisions and time in the workshop.
+      </p>
+      <div class="link-row detail-actions">
+        <a href={uciLiquidRocket.links[0].url} target="_blank" rel="noreferrer">
+          Link<span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </header>
+
+    <figure class="rocket-figure campus-photo">
+      <img src={media('lv_team_campus')} alt="The Launch Vehicle team with rocket components on the campus steps" width="1448" height="1086" fetchpriority="high" />
+      <figcaption>Our Launch Vehicle team on campus.</figcaption>
+    </figure>
+
+    <section class="rocket-section" aria-labelledby="cfd-heading">
+      <div class="section-copy">
+        <p class="eyebrow">01 · Simulation</p>
+        <h2 id="cfd-heading">CFD for team decisions</h2>
+        <p>
+          I simulated airflow around the rocket during flight and used the results to help
+          the team make engineering decisions. A simplified rocket model let me study
+          the external flow and inspect how details such as the pipe and camera affected
+          the surrounding airflow.
+        </p>
+      </div>
+
+      <figure class="rocket-figure model-figure">
+        <a href={media('cfd_model')} target="_blank" rel="noreferrer" aria-label="View the simplified CFD model at full size">
+          <img src={media('cfd_model')} alt="A rendering of my simplified rocket geometry for CFD, including the external pipe and camera" width="1800" height="750" loading="lazy" />
+        </a>
+        <figcaption>
+          My simplified rocket model for CFD, rendered from the STEP geometry.
+          <a href={withBase('models/uci_liquid_rocket/cfd_model.step')} download>Download STEP</a>
+        </figcaption>
+      </figure>
+
+      <div class="section-copy results-intro">
+        <h3>Looking at the flow</h3>
+        <p>
+          These views come from my CFD results. The overall flow and local views helped
+          me examine the airflow around the vehicle and its external components.
+        </p>
+      </div>
+
+      <div class="cfd-grid">
+        <figure class="rocket-figure">
+          <a href={media('cfd_overview')} target="_blank" rel="noreferrer" aria-label="Open the overall CFD flow visualization at full size">
+            <img src={media('cfd_overview')} alt="Velocity pathlines around the simplified rocket in the Mach 0.7 CFD case, with the original color scale" width="1072" height="618" loading="lazy" />
+          </a>
+          <figcaption>Velocity pathlines around the rocket in the Mach 0.7 case.</figcaption>
+        </figure>
+        <figure class="rocket-figure">
+          <a href={media('cfd_detail')} target="_blank" rel="noreferrer" aria-label="Open the local CFD flow visualization at full size">
+            <img src={media('cfd_detail')} alt="Velocity pathlines around the camera in the Mach 0.7 CFD case, with the original color scale" width="1072" height="618" loading="lazy" />
+          </a>
+          <figcaption>A closer look at the camera region in the same Mach 0.7 case.</figcaption>
+        </figure>
+      </div>
+
+      <div class="section-copy results-intro">
+        <h3>Flight dynamics in Ansys Fluent</h3>
+        <p>
+          I used Ansys Fluent's Dynamic Mesh model to study the rocket's motion,
+          with a custom UDF based on our rocket's center of gravity. I also estimated
+          fuel depletion to account for the changing mass during flight.
+        </p>
+      </div>
+      <figure class="rocket-figure motion-figure">
+        <video
+          controls
+          playsinline
+          preload="metadata"
+          poster={media('sixdof_poster')}
+          width="1920"
+          height="1080"
+          aria-label="Ansys Fluent rocket motion preview with mesh and force readouts"
+        >
+          <source src={withBase('media/uci_liquid_rocket/sixdof_preview.mp4')} type="video/mp4" />
+          <a href={withBase('media/uci_liquid_rocket/sixdof_preview.mp4')}>Watch the simulation video</a>
+        </video>
+        <figcaption>
+          Ansys Fluent motion demonstration through step 2600, showing mesh, pressure, and forces.
+          Visual transitions connect the saved simulation states.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="rocket-section design-section" aria-labelledby="nx-heading">
+      <div class="section-copy">
+        <p class="eyebrow">02 · Modeling</p>
+        <h2 id="nx-heading">CAD support</h2>
+        <p>
+          I helped other subteams model components, including the AV bay in Siemens NX
+          and an enclosure for the Engine Control Unit (ECU).
+        </p>
+      </div>
+
+      <div class="cad-grid">
+        <figure class="rocket-figure">
+          <a href={withBase('media/uci_liquid_rocket/av_bay_nx.png')} target="_blank" rel="noreferrer" aria-label="View the AV bay assembly in Siemens NX at full size">
+            <img src={withBase('media/uci_liquid_rocket/av_bay_nx.png')} alt="My AV bay assembly in Siemens NX, with circular mounting plates and the internal structural frame" width="2559" height="1525" loading="lazy" />
+          </a>
+          <figcaption>AV bay assembly in Siemens NX.</figcaption>
+        </figure>
+        <figure class="rocket-figure" id="ecu-heading">
+          <a href={media('ecu_case_render')} target="_blank" rel="noreferrer" aria-label="View the refined ECU enclosure at full size">
+            <img src={media('ecu_case_render')} alt="ECU enclosure with internal electronics, cables routed through the side openings, and a separate lid" width="2160" height="1440" loading="lazy" />
+          </a>
+          <figcaption>ECU enclosure, visualized from my early draft in SolidWorks.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="rocket-section" aria-labelledby="manufacturing-heading">
+      <div class="section-copy">
+        <p class="eyebrow">03 · Manufacturing</p>
+        <h2 id="manufacturing-heading">Working on the hardware</h2>
+        <p>
+          I also contributed practical manufacturing work: carbon fiber layup, 3D printing,
+          and manual assembly. Alongside the modeling and simulation, I helped with the
+          physical work of making parts and putting hardware together.
+        </p>
+      </div>
+      <figure class="rocket-figure">
+        <img src={media('lv_team_far')} alt="The Launch Vehicle team standing together beside the tower at FAR" width="1920" height="1080" loading="lazy" />
+        <figcaption>The Launch Vehicle team at FAR.</figcaption>
+      </figure>
+    </section>
+
+    <section class="rocket-section field-section" aria-labelledby="far-heading">
+      <div class="section-copy">
+        <p class="eyebrow">With the team</p>
+        <h2 id="far-heading">Days at FAR</h2>
+        <p>A few moments from the field and time spent together as a team.</p>
+      </div>
+      <div class="photo-grid">
+        <figure class="rocket-figure">
+          <img src={media('far_sunset')} alt="The sun setting over the desert and tower at FAR" width="1280" height="1280" loading="lazy" />
+          <figcaption>Sunset at FAR.</figcaption>
+        </figure>
+        <figure class="rocket-figure">
+          <img src={media('team_memories')} alt="A collection of instant photos from team gatherings and time at FAR" width="1280" height="1280" loading="lazy" />
+          <figcaption>Small moments with the team.</figcaption>
+        </figure>
+      </div>
+    </section>
+  </article>
+</SiteLayout>
+
+<style>
+  .intro-copy,
+  .section-copy {
+    max-width: 720px;
+  }
+
+  .intro-copy {
+    color: var(--muted);
+  }
+
+  .rocket-section {
+    margin-top: clamp(52px, 8vw, 82px);
+  }
+
+  .section-copy h2 {
+    margin: 8px 0 18px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(27px, 3.8vw, 36px);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  .section-copy p:last-child {
+    margin-bottom: 0;
+  }
+
+  .rocket-figure {
+    margin: 28px 0 0;
+  }
+
+  .rocket-figure img,
+  .rocket-figure video {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+  }
+
+  .rocket-figure a {
+    display: block;
+  }
+
+  .rocket-figure figcaption {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .rocket-figure figcaption a {
+    display: inline;
+    margin-left: 6px;
+    color: var(--accent);
+  }
+
+  .campus-photo {
+    max-width: 760px;
+    margin-top: 40px;
+  }
+
+  .results-intro {
+    margin-top: 36px;
+  }
+
+  .results-intro h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+
+  .cfd-grid {
+    display: grid;
+    gap: 8px;
+  }
+
+  .design-section {
+    padding-block: 34px;
+    border-block: 1px solid var(--line);
+  }
+
+  .cad-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(12px, 3vw, 24px);
+    max-width: 680px;
+    margin-top: 24px;
+  }
+
+  .cad-grid .rocket-figure {
+    min-width: 0;
+    margin: 0;
+  }
+
+  .cad-grid img {
+    aspect-ratio: 3 / 2;
+    height: auto;
+    object-fit: contain;
+    background: #fff;
+  }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  @media (max-width: 600px) {
+    .photo-grid {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+  }
+</style>

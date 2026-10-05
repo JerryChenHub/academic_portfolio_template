@@ -68,6 +68,22 @@ export const nasaBlueSkies = {
   ],
 };
 
+export const uciLiquidRocket = {
+  title: 'UCI Liquid Rocket',
+  summary:
+    'I supported our rocket team with flight CFD, component modeling in Siemens NX, and manufacturing work including carbon fiber layup, 3D printing, and manual assembly.',
+  context: 'UC Irvine · Launch Vehicle Team',
+  image: 'media/uci_liquid_rocket/full_team.webp',
+  imageAlt: 'The full UCI Liquid Rocket team together at FAR',
+  imageWidth: 1920,
+  imageHeight: 1280,
+  imageUrl: 'projects/uci_liquid_rocket/',
+  projectPage: 'projects/uci_liquid_rocket/',
+  links: [
+    { label: 'Link', url: 'https://www.rocket.eng.uci.edu/liquids/' },
+  ],
+};
+
 export const mae106Rover = {
   title: 'Pneumatic Rover',
   summary:
@@ -86,5 +102,6 @@ export const mae106Rover = {
 
 export const projects = [
   nasaBlueSkies,
+  uciLiquidRocket,
   mae106Rover,
 ];
